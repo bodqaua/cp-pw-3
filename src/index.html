@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World!</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+        <div id="platform">-</div>
+        <div class="block">
+            <p>CPU (%)</p>
+            <h4  id="cpu">-</h4>
+        </div>
+        <div class="block">
+            <p>Свободная память (%)</p>
+            <h4 id="freeMemory">-</h4>
+        </div>
+        <div class="block">
+            <p>Всего ОЗУ (GB)</p>
+            <h4 id="totalMemory">-</h4>
+        </div>
+    </div>
+
+    <script>
+        const electron = require("electron");
+        const cpuElement = document.getElementById("cpu");
+        const freeMemoryElement = document.getElementById("freeMemory");
+        const totalMemoryElement = document.getElementById("totalMemory");
+        const platformElement = document.getElementById("platform")
+
+        electron.ipcRenderer.on("system-information-event", (_, data) => {
+            cpuElement.innerText = data.cpu;
+            freeMemoryElement.innerText = data.freeMemory;
+            totalMemoryElement.innerText = data.totalMemory;
+            platformElement.innerText = data.platform;
+        });
+    </script>
+
+  </body>
+</html>
